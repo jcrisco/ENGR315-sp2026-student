@@ -10,6 +10,16 @@ Note: this problem does not require the "compounding interest" formula from the 
 
 ### Your code here ###
 
-in_state_gift = 0
+import math # import math library in case I need it
 
-out_state_gift = 0
+in_state_annual_cost = 30792 # define variable for in-state annual cost
+
+out_of_state_annual_cost = 47882 # define variable for out-of-state annual cost
+
+in_state_gift = in_state_annual_cost / 0.05 # calculate gift needed for in-state student
+
+out_state_gift = out_of_state_annual_cost / 0.05 # calculate gift needed for out-of-state student
+
+print("In-state gift needed: $", in_state_gift)
+
+print("Out-of-state gift needed: $", out_state_gift)

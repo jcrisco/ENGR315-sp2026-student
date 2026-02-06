@@ -17,6 +17,13 @@ list_average = -1
 
 # First Loop Here:
 
+for i in list_one:
+    if i > list_max:
+        list_max = i
+    elif i == list_max:
+        list_max = i
+    else:
+        continue
 
 # Second Loop Here:
 
