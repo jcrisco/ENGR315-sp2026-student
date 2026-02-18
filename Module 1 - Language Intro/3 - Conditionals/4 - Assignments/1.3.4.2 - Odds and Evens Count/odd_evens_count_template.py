@@ -29,3 +29,9 @@ num_evens = 0
 num_odds = 0
 
 ### YOUR CODE BEGINS HERE ###
+for num in nums:
+    if num % 2 == 0:
+        num_evens += 1
+    else: num_odds += 1
+
+print("There are " + str(num_evens) + " evens and " + str(num_odds) + " odds in the list.")

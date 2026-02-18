@@ -17,8 +17,12 @@ random_length = int(random.uniform(20, 100))
 # generate a random list of random length containing values up to 100
 random_list_A = random.sample(range(100), random_length)
 
+print("Random List A is:", random_list_A)
+
 # generate a random list of random length containing values up to 100
 random_list_B = random.sample(range(100), random_length)
+
+print("Random List B is:", random_list_B)
 
 # use the std() method from numpy to determine which list has the largest standard deviation
 
@@ -30,3 +34,17 @@ random_list_B = random.sample(range(100), random_length)
 longest_list_is = None
 
 ### YOUR CODE HERE
+std_A = np.std(random_list_A)
+
+print("Standard Deviation A is:", std_A)
+
+std_B = np.std(random_list_B)
+
+print("Standard Deviation B is:", std_B)
+
+if std_A > std_B:
+    longest_list_is = random_list_A
+    print("Longest List is List A")
+else:
+    longest_list_is = random_list_B
+    print("Longest List is List B")
