@@ -157,10 +157,14 @@ When your instructor updates the course materials, you can pull those changes in
 
 1. Open **GitHub Desktop**
 2. Make sure your repository is selected
-3. Go to **Repository** → **Pull** (or press `Ctrl+Shift+P` / `Cmd+Shift+P`)
-4. The new changes will be downloaded to your computer
+3. Go to **Repository** → **Fetch** (or press `Ctrl+Shift+T` / `Cmd+Shift+T`)
+4. Go to **Branch** → **Merge into current branch...** (or press `Ctrl+Shift+M` / `Cmd+Shift+M`)
+5. Select branch **upstream/main** that to be merge into your branch **main**
+6. The new changes will be downloaded to your computer
 
 **Note:** If you've modified any files that the instructor also updated, you may need to resolve "merge conflicts." Ask for help if this happens!
+
+**Note:** Frequent **commit** and **push** operations will help to track your changes, and sync Github (Cloud) with our local files.
 
 ## Step 6: Create a Virtual Environment and Install Python Packages
 
