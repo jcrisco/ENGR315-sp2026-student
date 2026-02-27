@@ -87,8 +87,8 @@ When new assignments or fixes are posted:
 
 1. Open **GitHub Desktop**
 2. Make sure this repository is selected
-3. Click **Fetch origin** and then **Pull origin**
-4. New materials will be downloaded to your computer
+3. Click **Fetch origin** and then **Merge from upstream/main**
+4. New materials will be downloaded and merged to your computer
 
 If you run into merge conflicts, ask for help!
 
