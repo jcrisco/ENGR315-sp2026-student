@@ -2,6 +2,7 @@ import numpy as np
 
 # make a basic array
 arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+print(arr2d)
 
 # what's the array shape
 shape = arr2d.shape
@@ -27,3 +28,14 @@ two_columns = arr2d[1, :2]
 # from all rows, get the first column
 first_column = arr2d[:, 0]
 
+print("First Two:", first_two)
+print("Two Columns:", two_columns)
+print("First Column:", first_column)
+
+# get the number 3
+number_3 = arr2d[0,2]
+print("Number 3:", number_3)
+
+# row 1 and row 3
+rows_1_and_3 = arr2d[0:3:2, :]
+print("Rows 1 and 3:", rows_1_and_3)
