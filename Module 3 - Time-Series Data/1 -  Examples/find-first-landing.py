@@ -82,10 +82,10 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
     # change this file name to load other datasets
-    filename = "FP1.txt"
+    filename = "\FP1.txt"
 
     # load force plate data (this path may change based upon where you place this file in your project)
-    path_to_data_folder = "../../data/drop-jump/force-plate/"
+    path_to_data_folder = r"C:\Users\jcris\OneDrive\Documents\GitHub\ENGR315-sp2026-student\data\drop-jump\force-plate"
 
     ### Do not modify below this line ###
 

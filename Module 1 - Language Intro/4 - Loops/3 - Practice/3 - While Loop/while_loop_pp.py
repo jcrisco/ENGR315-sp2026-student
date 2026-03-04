@@ -4,18 +4,20 @@
 # an example while loop is given below
 a = 1
 while a != 5:
-    a = a + 1  # pay attention where the counter (this part of the loop) is located
     print("not 5 yet, but we're at " + str(a))
+    a = a + 1  # pay attention where the counter (this part of the loop) is located
+    
 
 # now, move the counter to before the print statement
 # notice how the value of a has changed in the print value,
 # but remains the same in the actual value of a
 
 # first, we're going to write the condition of a while loop
-# this loop is going to multiply the variable x by 2 3 times
+# this loop is going to multiply the variable b by 2 3 times
 b = 5
 x = 0
-while x != 0:
+while x < 3:
+    print("b is currently " + str(b))
     b = b * 2
     x = x + 1
 
@@ -24,9 +26,13 @@ while x != 0:
 c = 3
 y = 0
 while y < 5:
-    break
+    c = c + c
+    y = y + 1
 
 # it's time to combine both of these concepts.
 # write a loop entirely from scratch that prints out a statement 6 times
 # the counter variable you will use is z
-z = 0
+z = 1
+while z < 7:
+    print("this is the " + str(z) + " time a statement has been printed ")
+    z = z + 1
