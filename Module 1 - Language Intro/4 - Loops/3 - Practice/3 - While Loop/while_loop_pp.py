@@ -8,7 +8,7 @@ while a != 5:
     a = a + 1  # pay attention where the counter (this part of the loop) is located
     
 
-# now, move the counter to before the print statement
+# now, move the counter to after the print statement
 # notice how the value of a has changed in the print value,
 # but remains the same in the actual value of a
 
