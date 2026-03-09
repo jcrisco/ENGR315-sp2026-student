@@ -61,8 +61,18 @@ def calculate_stress(force, sample_diameter):
     """
 
     ### YOUR SOLUTION FROM STEP 1 TEMPLATE HERE ###
+    # calculate the cross-section area (mm^2)
+    cross_sectional_area = (math.pi * sample_diameter**2) / 4 ### your code here ###
 
-    return None
+    # calculate stress (MPa) from load (kN) and cross-sectional area
+    stress = []
+    for f in force:
+        stress.append(f / cross_sectional_area) ### your code here ###
+
+    # delete this line and replace it with your own
+    stress = np.asarray(stress)
+
+    return stress
 
 
 def calculate_max_strength_strain(strain, stress):
@@ -76,8 +86,14 @@ def calculate_max_strength_strain(strain, stress):
     """
 
     ### YOUR SOLUTION FROM STEP 2 TEMPLATE HERE ###
+    # calculate the maximum stress experienced
+    ultimate_tensile_stress = max(stress)
 
-    return -1, -1
+    # calculate the maximum strain experienced
+    fracture_strain = max(strain)
+
+    return ultimate_tensile_stress, fracture_strain
+
 
 def calculate_elastic_modulus(strain, stress):
     """
@@ -97,8 +113,40 @@ def calculate_elastic_modulus(strain, stress):
     intercept = None
 
     ### YOUR SOLUTION FROM STEP 3 TEMPLATE HERE ###
+    # Step 3a: find the point that is 40% of peak stress
+    # use from 0 to that value to create a linear plot
+
+    ### your code below ###
+    secant_strain = 0.4 * max(stress)
+    
+
+    # Step 3b: find the intersection between 40% line and the curvey
+    # take the abs() difference between the stress vector and secant_straint point
+
+    ### your code below ###
+    diffs = np.abs(stress - secant_strain)
+
+    # use np.argmin() to find the minimum of the diffs array.
+    # this will be the INDEX of the point in stress-strain that is closest to
+    # secant_strain intersection
+
+    # uncomment the line below and replace with your own
+    linear_index = np.argmin(diffs)
+
+    # Step 3c: down select to linear region for stress and strain
+    # using list slicing. Uncomment lines below
+    linear_stress = stress[0:linear_index]
+    linear_strain = strain[0:linear_index]
+
+    # Step 3d: find least squares fit to a line in the linear region
+    # use 1-degree polynominal fit (line) from np.polyfit
+    # save the slope and intercept so we can plot the line later
+
+    # uncomment the line below and call np.polyfit
+    slope, intercept = np.polyfit(linear_strain, linear_stress, 1)
 
     return linear_index, slope, intercept
+
 
 def calculate_percent_offset(slope, strain, stress):
     """
@@ -115,14 +163,14 @@ def calculate_percent_offset(slope, strain, stress):
     offset = 0.002
 
     # calculate the offset line: y=m(x-0.002) + 0
-    offset_line = None
+    offset_line = slope * (strain - 0.002) + 0
 
     # measure distance from all points on graph to this line. Consider using the
     # abs() method to ensure values are positive
-    distance = None
+    distance = np.abs((stress) - offset_line)
 
     # use argmin to find the index where the distance is minimal
-    intercept_index = -1
+    intercept_index = np.argmin(distance)
 
     return offset_line, intercept_index
 
