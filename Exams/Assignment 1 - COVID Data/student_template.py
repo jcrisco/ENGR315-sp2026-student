@@ -13,6 +13,7 @@ def parse_nyt_data(file_path=''):
     :param file_path: Path to data file
     :return: A List of tuples containing (date,county, state, fips, cases, deaths) information
     """
+    
     # data point list
     data=[]
 
@@ -67,6 +68,18 @@ def first_question(data):
     """
 
     # your code here
+    rockingham_date = []
+    harrisonburg_date = []
+    for (date, county, state, fips, cases, deaths) in data:
+        if county == 'Rockingham' and state == 'Virginia':
+            rockingham_date.append((date,cases))
+            first_case_rockingham = min(rockingham_date)
+        elif county == 'Harrisonburg city' and state == 'Virginia':
+            harrisonburg_date.append((date,cases))
+            first_case_harrisonburg = min(harrisonburg_date)
+    print('The first positive COVID case in Rockingham County was on ', first_case_rockingham)
+    print('The first positive COVID case in Harrisonburg City was on ', first_case_harrisonburg)
+
     return
 
 def second_question(data):
@@ -78,6 +91,42 @@ def second_question(data):
     """
 
     # your code here
+    rockingham_cases = []
+    harrisonburg_cases = []
+    for (date, county, state, fips, cases, death) in data:
+        if county == 'Harrisonburg city' and state == 'Virginia':
+            harrisonburg_cases.append((date,cases))
+        elif county == 'Rockingham' and state == 'Virginia':
+            rockingham_cases.append((date,cases))
+
+    def find_max_cases(rockingham_cases, harrisonburg_cases):
+        rockingham_cases = sorted(rockingham_cases, key=lambda x: x[0])
+        harrisonburg_cases = sorted(harrisonburg_cases, key=lambda x: x[0])
+
+        max_cases_rockingham = 0
+        max_date_rockingham = ""
+        max_cases_harrisonburg = 0
+        max_date_harrisonburg = ""
+
+        for i in range(1, len(rockingham_cases)):
+            diff = int(rockingham_cases[i][1]) - int(rockingham_cases[i-1][1])
+            if diff > max_cases_rockingham:
+                max_cases_rockingham = diff
+                max_date_rockingham = rockingham_cases[i][0]
+
+        for i in range(1, len(harrisonburg_cases)):
+            diff = int(harrisonburg_cases[i][1]) - int(harrisonburg_cases[i-1][1])
+            if diff > max_cases_harrisonburg:
+                max_cases_harrisonburg = diff
+                max_date_harrisonburg = harrisonburg_cases[i][0]
+
+        return (max_date_rockingham, max_cases_rockingham), (max_date_harrisonburg, max_cases_harrisonburg)
+
+    (max_date_rockingham, max_cases_rockingham), (max_date_harrisonburg, max_cases_harrisonburg) = find_max_cases(rockingham_cases, harrisonburg_cases)
+
+    print('The greatest number of new daily cases recorded in Harrisonburg City was on ', max_date_harrisonburg, ',', max_cases_harrisonburg)
+    print('The greatest number of new daily cases recorded in Rockingham County was on ', max_date_rockingham, ',', max_cases_rockingham)
+
     return
 
 def third_question(data):
@@ -89,13 +138,49 @@ def third_question(data):
     """
     
     # your code here
+    rockingham_cases_week = []
+    harrisonburg_cases_week = []
+    for (date, county, state, fips, cases, death) in data:
+        if county == 'Harrisonburg city' and state == 'Virginia':
+            harrisonburg_cases_week.append((date,cases))
+        elif county == 'Rockingham' and state == 'Virginia':
+            rockingham_cases_week.append((date,cases))
+
+    def find_max_cases(rockingham_cases_week, harrisonburg_cases_week):
+        rockingham_cases_week = sorted(rockingham_cases_week, key=lambda x: x[0])
+        harrisonburg_cases_week = sorted(harrisonburg_cases_week, key=lambda x: x[0])
+
+        max_caseweek_rockingham = 0
+        max_dateweek_rockingham = ""
+        max_casesweek_harrisonburg = 0
+        max_dateweek_harrisonburg = ""
+
+        for i in range(7, len(rockingham_cases_week)):
+            diff_week_r = int(rockingham_cases_week[i][1]) - int(rockingham_cases_week[i-7][1])
+            if diff_week_r > max_caseweek_rockingham:
+                max_caseweek_rockingham = diff_week_r
+                max_dateweek_rockingham = (rockingham_cases_week[i][0], rockingham_cases_week[i-7][0])
+
+        for i in range(7, len(harrisonburg_cases_week)):
+            diff_week_h = int(harrisonburg_cases_week[i][1]) - int(harrisonburg_cases_week[i-7][1])
+            if diff_week_h > max_casesweek_harrisonburg:
+                max_casesweek_harrisonburg = diff_week_h
+                max_dateweek_harrisonburg = (harrisonburg_cases_week[i][0], harrisonburg_cases_week[i-7][0])
+
+        return (max_dateweek_rockingham, max_caseweek_rockingham), (max_dateweek_harrisonburg, max_casesweek_harrisonburg)
+
+    (max_dateweek_rockingham, max_caseweek_rockingham), (max_dateweek_harrisonburg, max_casesweek_harrisonburg) = find_max_cases(rockingham_cases_week, harrisonburg_cases_week)
+
+    print('The worst week in Harrisonburg City for new cases was from ', max_dateweek_harrisonburg, ',', max_casesweek_harrisonburg)
+    print('The worst week in Rockingham County for new cases was from ', max_dateweek_rockingham, ',', max_caseweek_rockingham)
+
     return
 
 if __name__ == "__main__":
     data = parse_nyt_data('us-counties.csv')
 
-    for (date,county, state, fips, cases, deaths) in data:
-        print('On ', date, ' in ', county, ' ', state, ' there were ', cases, ' cases and ', deaths, ' deaths')
+    #for (date,county, state, fips, cases, deaths) in data:
+        #print('On ', date, ' in ', county, ' ', state, ' there were ', cases, ' cases and ', deaths, ' deaths')
 
 
     # write code to address the following question: Use print() to display your responses.
