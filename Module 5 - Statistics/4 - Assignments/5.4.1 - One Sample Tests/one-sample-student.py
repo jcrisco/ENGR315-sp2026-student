@@ -36,6 +36,24 @@ def one_sample_tests(_files: list, _mean: float, _alpha: float, _less_than: bool
 
     # YOUR CODE HERE #
 
+    for filename in _files:
+        data = np.loadtxt(filename) # load data from filename
+        t_stat, p_value_two_sided = ttest_1samp(data, _mean) # perform a two-sided t-test against mean in null hypothesis
+        p_value_one_sided = p_value_two_sided / 2 # convert two-sided p-val to one-sided
+        sample_mean = np.mean(data) # calculate the mean of the sample in filename
+
+        
+
+        if _less_than: # left-sided test; will reject if sample mean is less than mean in null hypo. and p-value is less than alpha
+            if sample_mean < _mean and p_value_one_sided < _alpha:
+                reject_null_hypothesis.append(filename)
+
+        else: # right-sided test; will reject if sample mean is greater than mean in null hypo. and p-value is less than alpha
+            if sample_mean > _mean and p_value_one_sided < _alpha:
+                reject_null_hypothesis.append(filename)
+
+        
+
     # return samples that were rejected
     return reject_null_hypothesis
 
