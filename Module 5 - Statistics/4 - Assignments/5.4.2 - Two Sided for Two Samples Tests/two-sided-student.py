@@ -35,6 +35,14 @@ def two_sided_tests(_files1: list, _files2: list , _alpha: float):
 
     # YOUR CODE HERE #
 
+    for file1, file2 in zip(_files1, _files2):
+        data_files1 = np.loadtxt(file1)
+        data_files2 = np.loadtxt(file2)
+
+        t_stat, p_value = ttest_ind(data_files1, data_files2)
+        if p_value < _alpha:
+            reject_null_hypothesis.append((file1, file2))
+
     # return samples that were rejected
     return reject_null_hypothesis
 
