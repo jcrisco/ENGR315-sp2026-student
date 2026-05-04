@@ -1,5 +1,6 @@
 import numpy as np
 from ekg_testbench import EKGTestBench
+from scipy.signal import find_peaks
 
 def detect_heartbeats(filepath):
     """
@@ -15,36 +16,64 @@ def detect_heartbeats(filepath):
     path = filepath
 
     # load data in matrix from CSV file; skip first two rows
-    ## your code here
+    data = np.loadtxt(path, delimiter=',', skiprows=2)
 
     # save each vector as own variable
-    ## your code here
+    time = data[:, 0]
+    signal_col1 = data[:, 1]
+    signal_col2 = data[:, 2] if data.shape[1] > 2 else None
 
     # identify one column to process. Call that column signal
 
-    signal = -1 ## your code here
+    signal = signal_col1
 
     # pass data through LOW PASS FILTER (OPTIONAL)
-    ## your code here
+    lp = np.zeros(len(signal))
+    for n in range(len(signal)):
+        lp[n] = signal[n]
+        if n >= 1: lp[n] += 2 * lp[n-1]
+        if n >= 2: lp[n] -= lp[n-2]
+        if n >= 6: lp[n] -= 2 * signal[n-6]
+        if n >= 12: lp[n] += signal[n-12]
 
     # pass data through HIGH PASS FILTER (OPTIONAL) to create BAND PASS result
-    ## your code here
+    hp = np.zeros(len(lp))
+    for n in range(len(lp)):
+        hp[n] = -lp[n]
+        if n >= 1: hp[n] += hp[n-1]
+        if n >= 16: hp[n] += lp[n-16]
+        if n >= 17: hp[n] -= lp[n-17]
+        if n >= 32: hp[n] += lp[n-32]
+    
+    bandpass = hp
 
     # pass data through differentiator
-    ## your code here
+    deriv = np.zeros(len(bandpass))
+    for n in range(2, len(bandpass) - 2):
+        deriv[n] = (1/8) * (
+            -bandpass[n-2]
+            - 2*bandpass[n-1]
+            + 2*bandpass[n+1]
+            + bandpass[n+2]
+        )
 
     # pass data through square function
-    ## your code here
+    squared = deriv ** 2
 
     # pass through moving average window
-    ## your code here
+    window_size = 30
+    kernel = np.ones(window_size) / window_size
+    averaged = np.convolve(squared, kernel, mode='same')
 
     # use find_peaks to identify peaks within averaged/filtered data
     # save the peaks result and return as part of testbench result
 
-    ## your code here peaks,_ = find_peaks(....)
+    height_thresh = 0.1 * np.percentile(averaged, 95)
+    min_distance = 72
 
-    beats = None
+    peaks,_ = find_peaks(averaged, distance=min_distance, height=height_thresh)
+
+    beats = peaks
 
     # do not modify this line
     return signal, beats
